@@ -8,3 +8,14 @@
     baseurl: http://pkg.jenkins.io/redhat-stable
     gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
     gpgcheck: yes
+
+- name: Install Jenkins
+  yum: name={{item}} state=present
+  with_items:
+  - java-1.8.0-openjdk.x86_64
+  - jenkins
+
+- name: Start Jenkins
+  service: name=jenkins state=started enabled=yes
+
+- include: nginx.yml
