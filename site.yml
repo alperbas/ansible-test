@@ -8,9 +8,9 @@
   - common
 
 - name: apply the web
-  hosts: test
+  hosts: web
   remote_user: ansibleuser
-  become: no
+  become: yes
 
   roles:
   - apache
