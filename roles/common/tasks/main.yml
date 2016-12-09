@@ -1,0 +1,15 @@
+---
+# tasks file for common
+
+- name: install epel
+  yum: name=epel-release state=present
+
+- name: send root key for mbp
+  authorized_key: user=root
+    key="{{ lookup('file', 'root.pub') }}"
+    path='/root/.ssh/authorized_keys'
+    manage_dir=no
+
+- include: selinux.yml
+- include: ntp.yml
+- include: ansible_user.yml

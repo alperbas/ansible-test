@@ -1,0 +1,24 @@
+---
+- name: Setup | create user
+  command: useradd -m {{ createuser }} creates=/home/{{ createuser }}
+  become: true
+
+- name: Setup | set user password
+  shell: usermod -p $(echo '{{ createpassword }}' | openssl passwd -1 -stdin) {{ createuser }}
+  become: true
+
+- name: Setup | authorized key upload
+  authorized_key: user={{ createuser }}
+    key="{{ lookup('file', 'ansibleuser.pub') }}"
+    path='/home/{{ createuser }}/.ssh/authorized_keys'
+    manage_dir=no
+  become: true
+ 
+- name: Sudoers | update sudoers file and validate
+  lineinfile: 
+    dest: /etc/sudoers
+    insertafter: EOF
+    line: '{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+    regexp: '{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+    state: present
+  become: true

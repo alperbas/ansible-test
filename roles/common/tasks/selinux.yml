@@ -1,0 +1,17 @@
+---
+- name: install python bindings for SeLinux
+  yum: name={{item}} state=present
+  with_items:
+  - libselinux-python
+  - libsemanage-python
+
+- name: disable selinux
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: test to check SeLinux
+  command: getenforce
+  register: sestatus
+  changed_when: false
+

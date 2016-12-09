@@ -1,0 +1,7 @@
+---
+
+httpd_port: 80
+ntpserver: 0.centos.pool.ntp.org
+
+createuser: 'ansibleremote'
+createpassword: 'h3b3l3y0l0'

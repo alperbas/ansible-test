@@ -1,0 +1,17 @@
+---
+- name: apply the common config to all
+  hosts: all
+  remote_user: root
+  become: no
+
+  roles:
+  - common
+
+- name: apply the web
+  hosts: test
+  remote_user: ansibleuser
+  become: no
+
+  roles:
+  - apache
+  - web
