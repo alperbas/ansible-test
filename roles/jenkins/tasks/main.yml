@@ -1,0 +1,10 @@
+---
+# tasks file for jenkins
+
+- name: Add Jenkins repo
+  yum_repository:
+    name: Jenkins-stable
+    description: Jenkins repository
+    baseurl: http://pkg.jenkins.io/redhat-stable
+    gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    gpgcheck: yes

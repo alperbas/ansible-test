@@ -15,3 +15,11 @@
   roles:
   - apache
   - web
+
+- name: Jenkins host
+  hosts: jenkins
+  remote_user: ansibleuser
+  become: yes
+
+  roles:
+  - jenkins
