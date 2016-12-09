@@ -2,6 +2,6 @@ melaba
 {{ apache_test_message }} {{ ansible_distribution }} {{ ansible_distribution_version }} <br>
 Current Host: {{ ansible_hostname }} <br>
 Server List: <br>
-{% for host in groups.test %}
+{% for host in groups.web %}
 {{ host }} <br>
 {% endfor %}
