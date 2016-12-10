@@ -1,0 +1,6 @@
+---
+- name: content check
+  hosts: web
+
+  roles:
+  - web
