@@ -27,3 +27,5 @@
     return_content: yes
   register: result
   until: '"Hello Moon" in result.content'
+
+- include: content.yml
