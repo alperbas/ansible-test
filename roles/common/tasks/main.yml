@@ -1,6 +1,8 @@
 ---
 # tasks file for common
 
+- include: selinux.yml
+
 - name: install epel
   yum: name=epel-release state=present
 
@@ -10,6 +12,5 @@
     path='/root/.ssh/authorized_keys'
     manage_dir=no
 
-- include: selinux.yml
 - include: ntp.yml
 - include: ansible_user.yml
