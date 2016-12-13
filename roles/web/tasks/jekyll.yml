@@ -1,0 +1,15 @@
+---
+- name: install dependencies
+  yum: name={{item}} state=present
+  with_items:
+  - ruby
+  - ruby-devel
+  - rubygems
+  - gcc
+  - zlib-devel
+
+- name: Install bundler
+  command: bash -lc "gem install {{item}}"
+  with_items:
+  - bundler
+  - jekyll
