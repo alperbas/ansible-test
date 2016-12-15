@@ -6,3 +6,4 @@
 - include: content.yml
 - include: lameapp.yml
 - include: jekyll.yml
+- include: githubpages.yml
