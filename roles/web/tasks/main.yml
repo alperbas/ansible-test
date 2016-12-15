@@ -5,4 +5,3 @@
 
 - include: lameapp.yml
 - include: jekyll.yml
-- include: githubpages.yml
