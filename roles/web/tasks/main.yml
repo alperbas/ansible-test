@@ -3,7 +3,6 @@
 - name: install git
   yum: name=git state=present
 
-- include: content.yml
 - include: lameapp.yml
 - include: jekyll.yml
 - include: githubpages.yml

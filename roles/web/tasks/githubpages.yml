@@ -2,4 +2,4 @@
 - name: clone kisitlikaynaklar
   git:
     repo: https://github.com/kisitlikaynaklar/kisitlikaynaklar.github.io.git
-    dest: /var/www/html/kisitlikaynaklar
+    dest: /var/www/kisitlikaynaklar
