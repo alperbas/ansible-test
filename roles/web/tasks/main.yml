@@ -3,5 +3,8 @@
 - name: install git
   yum: name=git state=present
 
+- name: add test script
+  copy: src=test.sh dest=/usr/local/bin
+
 - include: lameapp.yml
 - include: jekyll.yml
