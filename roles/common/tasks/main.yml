@@ -4,7 +4,14 @@
 - include: selinux.yml
 
 - name: install epel
-  yum: name=epel-release state=present
+  yum: 
+    name=epel-release 
+    state=latest
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
 
 - name: send root key for mbp
   authorized_key: user=root
