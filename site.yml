@@ -6,6 +6,7 @@
 
   roles:
   - common
+  - vbox
 
 - name: apply the web
   hosts: web

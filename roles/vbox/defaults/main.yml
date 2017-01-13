@@ -1,0 +1,15 @@
+---
+# defaults file for vbox
+virtualbox:
+  guest_additions:
+    version: 5.1.10
+    iso_url: http://download.virtualbox.org/virtualbox/5.1.10/VBoxGuestAdditions_5.1.10.iso
+    iso_checksum: 29fa0af66a3dd273b0c383c4adee31a52061d52f57d176b67f444698300b8c41 
+    iso_dir: /tmp
+    iso_mountdir: /mnt
+
+env:
+  proxies:
+    http_proxy:
+    https_proxy:
+    ftp_proxy:
