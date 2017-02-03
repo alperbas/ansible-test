@@ -43,16 +43,17 @@
 ## db-[99:101]-node.example.com
 
 [master]
-172.20.10.8
+centos7-m01
 
 [web]
-172.20.10.14
-172.20.10.10
-172.20.10.13
+centos7-s01
+centos7-s02
+centos7-s03
 
 [jenkins]
-172.20.10.12
+centos7-jenkins01
 
 [all:vars]
 ansible_user=root
 ansible_ssh_private_key_file=~/.ssh/id_rsa
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
