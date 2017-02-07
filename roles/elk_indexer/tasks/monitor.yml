@@ -13,6 +13,9 @@
 - name: Install kibana
   yum: name=kibana state=present
 
+- name: Create kibana log directory
+  file: path=/var/log/kibana state=directory owner=kibana
+
 - name: Copy kibana configs
   template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml
   notify: restart kibana
