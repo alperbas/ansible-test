@@ -10,23 +10,27 @@
     gpgcheck: yes
     file: elastic
 
-- name: install kibana
+- name: Install kibana
   yum: name=kibana state=present
 
-- name: copy kibana configs
+- name: Copy kibana configs
   template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml
   notify: restart kibana
 
-- name: start kibana
+- name: Start kibana
   service: name=kibana state=started enabled=yes
+
+- name: Check if Cerebro exists
+  stat: path={{ cerebro_path }}/cerebro-{{ cerebro_ver }}/bin/cerebro
+  register: cerebro_exists
 
 - name: Download and unpack Cerebro
   unarchive:
     src: "https://github.com/lmenezes/cerebro/releases/download/v{{ cerebro_ver }}/cerebro-{{ cerebro_ver }}.tgz"
-    dest: "/opt/"
+    dest: "{{ cerebro_path }}/"
     keep_newer: yes
     copy: no
-  changed_when: false
+  when: cerebro_exists.stat.exists == False
 
 - name: install supervisor
   yum: name=supervisor state=present
@@ -38,7 +42,7 @@
   notify: restart supervisor
 
 - name: copy cerebro configs
-  template: src=cerebro.conf.j2 dest=/opt/cerebro-{{ cerebro_ver }}/conf/application.conf
+  template: src=cerebro.conf.j2 dest={{ cerebro_path }}/cerebro-{{ cerebro_ver }}/conf/application.conf
   notify: restart supervisor
 
 - name: start supervisor
