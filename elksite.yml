@@ -1,0 +1,16 @@
+---
+#- name: apply the common config to all
+#  hosts: all
+#  remote_user: root
+#  become: no
+#
+#  roles:
+#  - common
+
+- name: ELK Stack
+  hosts: shipper:cache:indexer::elasticsearch
+  remote_user: ansibleuser
+  become: yes
+
+  roles:
+  - elk_indexer

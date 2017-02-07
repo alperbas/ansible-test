@@ -1,0 +1,16 @@
+input {
+  {% for host in groups.cache %}
+  redis {
+    host => "{{ host }}"
+    batch_count => "500"
+    threads => "4"
+    type => "syslog"
+    # these settings should match the output of the agent
+    #data_type => "channel"
+    data_type => "list"
+    key => "logstash-log"
+    # We use json_event here since the sender is a logstash agent
+    codec => "json"
+  }
+  {% endfor %}
+}

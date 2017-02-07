@@ -1,0 +1,13 @@
+output {
+  if "metric" in [tags] {
+    elasticsearch {
+      hosts => [ {% for host in groups.elasticsearch %} "{{host}}:9200" {%- if not loop.last %},{% endif %}{% endfor %} ]
+      index => "logstash-metrics-%{+YYYY.MM}"
+    }
+  } else {
+    elasticsearch {
+      index => "logstash-%{+YYYY.MM.dd}"
+      hosts => [ {% for host in groups.elasticsearch %} "{{host}}:9200" {%- if not loop.last %},{% endif %}{% endfor %} ]
+    }
+  }
+}

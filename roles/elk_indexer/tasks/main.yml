@@ -1,0 +1,22 @@
+---
+# tasks file for elk_indexer
+
+- name: Include Logstash
+  include: logstash.yml
+  when: inventory_hostname in groups['indexer'] or inventory_hostname in groups['shipper'] or inventory_hostname in groups['cache']
+
+- name: Include Redis
+  include: redis.yml
+  when: inventory_hostname in groups['cache']
+
+- name: Include Elasticsearch
+  include: elasticsearch.yml
+  when: inventory_hostname in groups['elasticsearch']
+
+- name: Include monitor
+  include: monitor.yml
+  when: inventory_hostname == 'centos7-shipper1'
+
+- name: Install netcat utility
+  yum: name=nc state=present
+  when: inventory_hostname in groups['shipper']

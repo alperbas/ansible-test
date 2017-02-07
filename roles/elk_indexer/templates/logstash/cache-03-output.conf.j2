@@ -1,0 +1,6 @@
+output {
+  elasticsearch {
+    index => "redis-%{+YYYY.MM}"
+    hosts => [ {% for host in groups.elasticsearch %} "{{host}}:9200" {%- if not loop.last %},{% endif %}{% endfor %} ]
+  }
+}

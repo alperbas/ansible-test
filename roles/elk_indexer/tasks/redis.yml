@@ -1,0 +1,15 @@
+---
+# tasks file for elk_indexer
+
+- name: install redis
+  yum: name=redis state=present
+
+- name: copy indexer configs
+  template: src=redis/{{ item }}.j2 dest=/etc/{{ item }}
+  with_items:
+    - redis.conf
+    - redis-sentinel.conf
+  notify: restart redis
+
+- name: start redis
+  service: name=redis state=started enabled=yes

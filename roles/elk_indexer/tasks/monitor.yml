@@ -1,0 +1,45 @@
+---
+# tasks file for elk_indexer
+
+- name: Add elastic repo
+  yum_repository:
+    name: elasticrepo
+    description: Repo for elastic products
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: yes
+    file: elastic
+
+- name: install kibana
+  yum: name=kibana state=present
+
+- name: copy kibana configs
+  template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml
+  notify: restart kibana
+
+- name: start kibana
+  service: name=kibana state=started enabled=yes
+
+- name: Download and unpack Cerebro
+  unarchive:
+    src: "https://github.com/lmenezes/cerebro/releases/download/v{{ cerebro_ver }}/cerebro-{{ cerebro_ver }}.tgz"
+    dest: "/opt/"
+    keep_newer: yes
+    copy: no
+  changed_when: false
+
+- name: install supervisor
+  yum: name=supervisor state=present
+
+- name: copy supervisor configs
+  template: src={{ item }}.j2 dest=/etc/supervisord.d/{{ item }}
+  with_items:
+    - supervisor-cerebro.ini
+  notify: restart supervisor
+
+- name: copy cerebro configs
+  template: src=cerebro.conf.j2 dest=/opt/cerebro-{{ cerebro_ver }}/conf/application.conf
+  notify: restart supervisor
+
+- name: start supervisor
+  service: name=supervisord state=started enabled=yes

@@ -1,0 +1,32 @@
+input {
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} info clients"
+    interval => {{ redis_monitor_interval }}
+    type => "clients"
+  }
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} info memory"
+    interval => {{ redis_monitor_interval }}
+    type => "memory"
+  }
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} info cpu"
+    interval => {{ redis_monitor_interval }}
+    type => "cpu"
+  }
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} info stats"
+    interval => {{ redis_monitor_interval }}
+    type => "stats"
+  }
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} info replication"
+    interval => {{ redis_monitor_interval }}
+    type => "replication"
+  }
+  exec {
+    command => "redis-cli -h {{ ansible_hostname }} LLEN logstash-log"
+    interval => {{ redis_monitor_interval }}
+    type => "key"
+  }
+}

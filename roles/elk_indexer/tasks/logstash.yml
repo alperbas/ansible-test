@@ -1,0 +1,46 @@
+---
+# tasks file for elk_indexer
+
+- name: Add elastic repo
+  yum_repository:
+    name: elasticrepo
+    description: Repo for elastic products
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: yes
+    file: elastic
+
+- name: install java
+  yum: name=java-{{ java_ver }}-openjdk state=present
+
+- name: install logstash
+  yum: name=logstash state=present
+
+- name: copy indexer configs
+  template: src=logstash/indexer-{{ item }}.j2 dest=/etc/logstash/conf.d/{{ item }}
+  with_items:
+    - 01-input.conf
+    - 02-filter.conf
+    - 03-output.conf
+  when: inventory_hostname in groups['indexer']
+  notify: restart logstash
+
+- name: copy shipper configs
+  template: src=logstash/shipper-{{ item }}.j2 dest=/etc/logstash/conf.d/{{ item }}
+  with_items:
+    - 01-input.conf
+    - 03-output.conf
+  when: inventory_hostname in groups['shipper']
+  notify: restart logstash
+
+- name: copy redis configs
+  template: src=logstash/cache-{{ item }}.j2 dest=/etc/logstash/conf.d/{{ item }}
+  with_items:
+    - 01-input.conf
+    - 02-filter.conf
+    - 03-output.conf
+  when: inventory_hostname in groups['cache']
+  notify: restart logstash
+
+- name: start logstash
+  service: name=logstash state=started enabled=yes

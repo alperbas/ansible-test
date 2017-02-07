@@ -1,0 +1,18 @@
+filter {
+  if [type] == "key" {
+    mutate {
+      add_field => { "key_length" => "%{message}" }
+      strip => ["key_length", "message"]
+      convert => { "key_length" => "integer" }
+    }
+  } else {
+    kv {
+      value_split => ":"
+      field_split => "\n"
+      trim => "\r"
+    }
+  }
+  mutate {
+    remove_field => ["message"]
+  }
+}

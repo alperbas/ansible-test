@@ -1,0 +1,6 @@
+[program:cerebro]
+command=/opt/cerebro-{{ cerebro_ver }}/bin/cerebro
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/cerebro.err.log
+stdout_logfile=/var/log/cerebro.out.log

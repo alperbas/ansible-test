@@ -1,0 +1,27 @@
+---
+# tasks file for elk_indexer
+
+- name: Add elastic repo
+  yum_repository:
+    name: elasticrepo
+    description: Repo for elastic products
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: yes
+    file: elastic
+
+- name: install java
+  yum: name=java-{{ java_ver }}-openjdk state=present
+
+- name: install elasticsearch
+  yum: name=elasticsearch state=present
+
+- name: copy elasticsearch configs
+  template: src=elasticsearch/elastic-{{ item }}.j2 dest=/etc/elasticsearch/{{ item }}
+  with_items:
+    - elasticsearch.yml
+    - jvm.options
+  notify: restart elasticsearch
+
+- name: start elasticsearch
+  service: name=elasticsearch state=started enabled=yes

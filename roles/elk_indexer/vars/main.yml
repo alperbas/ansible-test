@@ -1,0 +1,9 @@
+---
+# vars file for elk_indexer
+java_ver: 1.8.0
+
+elastic_jvm_heap: 1g
+
+cerebro_ver: 0.5.0
+
+redis_monitor_interval: 15

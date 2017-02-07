@@ -1,0 +1,20 @@
+[shipper]
+centos7-shipper1
+centos7-shipper2
+
+[cache]
+centos7-kafka1
+centos7-kafka2
+
+[indexer]
+centos7-indexer1
+centos7-indexer2
+
+[elasticsearch]
+centos7-elastic1
+centos7-elastic2
+
+[all:vars]
+ansible_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
