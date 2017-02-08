@@ -4,7 +4,7 @@
   yum: name=git state=present
 
 - name: add test script
-  copy: src=web-test.sh dest=/usr/local/bin
+  copy: src=web-test.sh dest=/usr/local/bin mode=755
 
 - include: lameapp.yml
 - include: jekyll.yml
